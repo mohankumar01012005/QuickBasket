@@ -1,4 +1,4 @@
-import { FlatList, Pressable } from "react-native";
+import { FlatList, Pressable,useWindowDimensions } from "react-native";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { Heading } from "@/components/ui/heading";
@@ -6,6 +6,9 @@ import { Card } from "@/components/ui/card";
 import { Box } from "@/components/ui/box";
 import products from "../assets/products.json";
 import { Link } from "expo-router";
+import { useBreakpointValue } from "@/components/ui/utils/use-break-point-value";
+
+
 
 type Product = {
   id: number;
@@ -43,12 +46,21 @@ function ProductListItem({ product }: ProductListItemProps) {
 }
 
 export default function HomeScreen() {
+  // const {width} = useWindowDimensions();
+  // const noColumns= width>700 ? 3:2
+
+  const noColumns=useBreakpointValue({
+    default:2,
+    sm:3,
+    xl:4,
+  });
   return (
     <FlatList
+      key={noColumns}
       data={products}
-      numColumns={2}
+      numColumns={noColumns}
       keyExtractor={(item) => item.id.toString()}
-      columnWrapperClassName="gap-x-2"
+      columnWrapperClassName="gap-x"
       renderItem={({ item }) => (
         <Box className="w-1/2 p-2">
           <ProductListItem product={item} />
