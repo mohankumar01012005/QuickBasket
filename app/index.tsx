@@ -1,12 +1,11 @@
-import { FlatList } from "react-native";
-import { VStack } from "@/components/ui/vstack";
+import { FlatList, Pressable } from "react-native";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { Heading } from "@/components/ui/heading";
 import { Card } from "@/components/ui/card";
 import { Box } from "@/components/ui/box";
-import { Button, ButtonText } from "@/components/ui/button";
 import products from "../assets/products.json";
+import { Link } from "expo-router";
 
 type Product = {
   id: number;
@@ -22,31 +21,24 @@ type ProductListItemProps = {
 
 function ProductListItem({ product }: ProductListItemProps) {
   return (
-    <Card className="w-full  p-4 rounded-lg bg-white flex-1">
-      <Image
-        source={{ uri: product.image }}
-        className="mb-4 h-[240px] w-full rounded-md aspect-[4/3]"
-        alt="image"
-        resizeMode="contain"
-      />
-      <Text className="text-sm font-normal mb-2 text-typography-700">
-        {product.name}
-      </Text>
-      <VStack className="mb-6">
-        <Heading size="md" className="mb-4">
-        ₹{product.price}
-        </Heading>
-        <Text size="sm">{product.description}</Text>
-      </VStack>
-      <Box className="flex flex-col sm:flex-row sm:space-x-3">
-        <Button className="px-4 py-2 sm:flex-1">
-          <ButtonText size="sm">Add to cart</ButtonText>
-        </Button>
-        <Button variant="outline" className="px-4 py-2 border-outline-300 sm:flex-1">
-          <ButtonText size="sm" className="text-typography-600">Wishlist</ButtonText>
-        </Button>
-      </Box>
-    </Card>
+    <Link href={`/product/${product.id}`} asChild>
+      <Pressable className="flex-1">
+        <Card className="w-full h-[300px] p-4 rounded-lg bg-white flex flex-grow justify-between">
+          <Image
+            source={{ uri: product.image }}
+            className="mb-4 h-[180px] w-full rounded-md"
+            alt="image"
+            resizeMode="contain"
+          />
+          <Text className="text-sm font-normal text-typography-700" numberOfLines={2}>
+            {product.name}
+          </Text>
+          <Heading size="md" className="mt-auto">
+            ₹{product.price}
+          </Heading>
+        </Card>
+      </Pressable>
+    </Link>
   );
 }
 
@@ -56,8 +48,7 @@ export default function HomeScreen() {
       data={products}
       numColumns={2}
       keyExtractor={(item) => item.id.toString()}
-      // contentContainerClassName="gap-2"
-      columnWrapperClassName="gap-1"
+      columnWrapperClassName="gap-x-2"
       renderItem={({ item }) => (
         <Box className="w-1/2 p-2">
           <ProductListItem product={item} />
