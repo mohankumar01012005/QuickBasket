@@ -1,12 +1,16 @@
-import { FlatList, Pressable,useWindowDimensions } from "react-native";
+import { ActivityIndicator, FlatList, Pressable } from "react-native";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
 import { Heading } from "@/components/ui/heading";
 import { Card } from "@/components/ui/card";
 import { Box } from "@/components/ui/box";
-import products from "../assets/products.json";
+
 import { Link } from "expo-router";
 import { useBreakpointValue } from "@/components/ui/utils/use-break-point-value";
+import { useEffect, useState } from "react";
+import { listProducts } from "@/api/products";
+import { useQuery } from "@tanstack/react-query";
+
 
 
 
@@ -46,18 +50,30 @@ function ProductListItem({ product }: ProductListItemProps) {
 }
 
 export default function HomeScreen() {
-  // const {width} = useWindowDimensions();
-  // const noColumns= width>700 ? 3:2
+
+
+  const {data,isLoading,error}=useQuery({queryKey:['products'], queryFn:listProducts});
+
+
 
   const noColumns=useBreakpointValue({
     default:2,
     sm:3,
     xl:4,
   });
+
+if(isLoading){
+  return <ActivityIndicator></ActivityIndicator>
+}
+if(error){
+  return <Text>Eror fetching product details</Text>
+}
+
+
   return (
     <FlatList
       key={noColumns}
-      data={products}
+      data={data}
       numColumns={noColumns}
       keyExtractor={(item) => item.id.toString()}
       columnWrapperClassName="gap-x"

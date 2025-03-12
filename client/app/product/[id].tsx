@@ -1,6 +1,6 @@
-import { useLocalSearchParams , Stack} from "expo-router";
-import { View } from "react-native";
-import products from "@/assets/products.json";
+import { useLocalSearchParams, Stack } from "expo-router";
+import { ActivityIndicator, View } from "react-native";
+
 import { VStack } from "@/components/ui/vstack";
 import { Text } from "@/components/ui/text";
 import { Image } from "@/components/ui/image";
@@ -8,21 +8,45 @@ import { Heading } from "@/components/ui/heading";
 import { Card } from "@/components/ui/card";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProductById } from "@/api/products";
 
 export default function ProductDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const product = products.find((p) => p.id === Number(id));
+
+  const {
+    data: product,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["products", id],
+    queryFn: () => fetchProductById(Number(id)),
+  });
+
+  if(isLoading){
+    return <ActivityIndicator></ActivityIndicator>
+  }
+
+
+  if(error){
+    return <Text>Product not Found</Text>
+  }
+
+  
 
   if (!product) {
-    return <Text className="text-center mt-10">Product details not found for ID: {id}</Text>;
+    return (
+      <Text className="text-center mt-10">
+        Product details not found for ID: {id}
+      </Text>
+    );
   }
 
   return (
     <View className="flex-1 items-center justify-center p-4 bg-gray-100">
-      <Stack.Screen  options={{title:product.name}}></Stack.Screen>
+      <Stack.Screen options={{ title: product.name }}></Stack.Screen>
 
-     <Card className="w-full h-[95vh] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl sm:h-auto sm:min-h-[70vh] p-6 rounded-lg bg-white flex justify-between">
-
+      <Card className="w-full h-[95vh] max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl sm:h-auto sm:min-h-[70vh] p-6 rounded-lg bg-white flex justify-between">
         {/* Image */}
         <Image
           source={{ uri: product.image }}
@@ -49,8 +73,13 @@ export default function ProductDetailScreen() {
           <Button className="flex-1 px-4 py-2">
             <ButtonText size="sm">Add to cart</ButtonText>
           </Button>
-          <Button variant="outline" className="flex-1 px-4 py-2 border-outline-300">
-            <ButtonText size="sm" className="text-typography-600">Wishlist</ButtonText>
+          <Button
+            variant="outline"
+            className="flex-1 px-4 py-2 border-outline-300"
+          >
+            <ButtonText size="sm" className="text-typography-600">
+              Wishlist
+            </ButtonText>
           </Button>
         </Box>
       </Card>

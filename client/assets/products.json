@@ -68,5 +68,73 @@
     "description": "Sony's latest gaming console with 8K output, lightning-fast load times, and 825GB SSD.",
     "image": "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/ecom/playstation5.jpg",
     "price": 499.99
-  }
+  },
+  
+    {
+      "id": 11,
+      "name": "Sony WH-1000XM5",
+      "description": "Industry-leading noise-canceling headphones with premium sound quality and up to 30 hours of battery life.",
+      "image": "https://picsum.photos/id/1011/200/300",
+      "price": 349.99
+    },
+    {
+      "id": 12,
+      "name": "GoPro HERO11 Black",
+      "description": "Rugged and waterproof action camera with 5.3K video recording and HyperSmooth stabilization.",
+      "image": "https://picsum.photos/id/1020/200/300",
+      "price": 499.99
+    },
+    {
+      "id": 13,
+      "name": "Kindle Paperwhite",
+      "description": "Waterproof e-reader with a 6.8-inch display, adjustable warm light, and 10 weeks of battery life.",
+      "image": "https://picsum.photos/id/1025/200/300",
+      "price": 139.99
+    },
+    {
+      "id": 14,
+      "name": "Fitbit Charge 6",
+      "description": "Advanced fitness and health tracker with built-in GPS, heart rate monitoring, and sleep tracking.",
+      "image": "https://picsum.photos/id/1035/200/300",
+      "price": 149.99
+    },
+    {
+      "id": 15,
+      "name": "Nikon Z7 II",
+      "description": "High-resolution full-frame mirrorless camera with 45.7MP sensor and dual EXPEED 6 processors.",
+      "image": "https://picsum.photos/id/1040/200/300",
+      "price": 2999.99
+    },
+    {
+      "id": 16,
+      "name": "Dell XPS 13",
+      "description": "Ultra-thin and light laptop with 13.4-inch InfinityEdge display and 11th Gen Intel Core processors.",
+      "image": "https://picsum.photos/id/1050/200/300",
+      "price": 999.99
+    },
+    {
+      "id": 17,
+      "name": "Oculus Quest 3",
+      "description": "All-in-one virtual reality headset with 4K display and advanced hand-tracking technology.",
+      "image": "https://picsum.photos/id/1060/200/300",
+      "price": 399.99
+    },
+    {
+      "id": 18,
+      "name": "Instant Pot Duo 7-in-1",
+      "description": "Versatile electric pressure cooker with 7 cooking functions, including slow cooking and sautéing.",
+      "image": "https://picsum.photos/id/1070/200/300",
+      "price": 89.99
+    },
+    {
+      "id": 19,
+      "name": "Ring Video Doorbell 4",
+      "description": "Smart doorbell with 1080p HD video, two-way talk, and advanced motion detection.",
+      "image": "https://picsum.photos/id/1080/200/300",
+      "price": 199.99
+    }
+    
+  
+  
+  
 ]
