@@ -9,7 +9,7 @@ export async function listProducts() {
     throw new Error("Error");
   }
 
-  console.log("data: ", data);
+  // console.log("data: ", data);
   return data;
 }
 
@@ -21,6 +21,6 @@ export async function fetchProductById(id: number) {
     throw new Error("Error");
   }
 
-  console.log("data: ", data);
+  // console.log("data: ", data);
   return data;
 }
