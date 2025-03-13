@@ -12,6 +12,7 @@ import { View, Pressable } from "react-native";
 import { Link, useRouter } from "expo-router"; // useRouter for navigation
 import { useToast, Toast, ToastTitle } from "@/components/ui/toast";
 import { CheckCircle } from "lucide-react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen() {
   const router = useRouter(); // React Native router
@@ -28,34 +29,28 @@ export default function LoginScreen() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, role }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
+        await AsyncStorage.setItem("user", JSON.stringify(data.user)); // Store user data
+        console.log("Stored User Data:", data.user); // Debugging
+  
         toast.show({
           placement: "top",
-          render: ({ id }) => {
-            return (
-              <Toast
-                nativeID={`toast-${id}`}
-                className="px-5 py-3 gap-4 shadow-soft-1 items-center flex-row bg-green-500 rounded-lg"
-              >
-                <Icon
-                  as={CheckCircle}
-                  size="xl"
-                  className="fill-white stroke-none"
-                />
-                <ToastTitle size="sm" className="text-white">
-                  {role === "user" ? "User Login Successful" : "Seller Login Successful"}
-                </ToastTitle>
-              </Toast>
-            );
-          },
+          render: ({ id }) => (
+            <Toast nativeID={`toast-${id}`} className="px-5 py-3 gap-4 shadow-soft-1 items-center flex-row bg-green-500 rounded-lg">
+              <Icon as={CheckCircle} size="xl" className="fill-white stroke-none" />
+              <ToastTitle size="sm" className="text-white">
+                {role === "user" ? "User Login Successful" : "Seller Login Successful"}
+              </ToastTitle>
+            </Toast>
+          ),
         });
-
+  
         setTimeout(() => {
-          router.replace("/"); // Redirect to home screen (index)
-        }, 1000); // Delay to show toast before redirecting
+          router.replace("/");
+        }, 1000);
       } else {
         alert(data.message);
       }
@@ -63,6 +58,7 @@ export default function LoginScreen() {
       alert("Login failed!");
     }
   };
+  
 
   return (
     <FormControl className="p-4 border rounded-lg border-outline-300">
