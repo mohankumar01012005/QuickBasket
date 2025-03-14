@@ -24,7 +24,7 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:5000/auth/login", {
+      const response = await fetch("https://mohan-commerce.vercel.app/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, role }),
@@ -33,13 +33,18 @@ export default function LoginScreen() {
       const data = await response.json();
   
       if (response.ok) {
-        await AsyncStorage.setItem("user", JSON.stringify(data.user)); // Store user data
+        // ✅ Store the full user object in AsyncStorage
+        await AsyncStorage.setItem("user", JSON.stringify(data.user));
+  
         console.log("Stored User Data:", data.user); // Debugging
   
         toast.show({
           placement: "top",
           render: ({ id }) => (
-            <Toast nativeID={`toast-${id}`} className="px-5 py-3 gap-4 shadow-soft-1 items-center flex-row bg-green-500 rounded-lg">
+            <Toast
+              nativeID={`toast-${id}`}
+              className="px-5 py-3 gap-4 shadow-soft-1 items-center flex-row bg-green-500 rounded-lg"
+            >
               <Icon as={CheckCircle} size="xl" className="fill-white stroke-none" />
               <ToastTitle size="sm" className="text-white">
                 {role === "user" ? "User Login Successful" : "Seller Login Successful"}
@@ -48,6 +53,7 @@ export default function LoginScreen() {
           ),
         });
   
+        // ✅ Navigate to home page after a short delay
         setTimeout(() => {
           router.replace("/");
         }, 1000);
@@ -55,9 +61,11 @@ export default function LoginScreen() {
         alert(data.message);
       }
     } catch (error) {
+      console.error("Login Error:", error);
       alert("Login failed!");
     }
   };
+  
   
 
   return (
